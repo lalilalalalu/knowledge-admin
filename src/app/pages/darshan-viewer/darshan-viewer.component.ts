@@ -340,7 +340,7 @@ initMounts(){
     mountdata[mount[0]] = mount[1]
     
   });
-  this.testMounts = mountdata
+  this.mounts = mountdata
 }
 
 //add Wirtten Files data
