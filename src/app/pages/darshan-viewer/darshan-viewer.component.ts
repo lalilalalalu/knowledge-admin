@@ -25,8 +25,8 @@ export class DarshanResultViewerComponent implements OnInit {
   data: TreeNode<Result>[] = [];
 
   //some information
-  testMounts: any;
-  testFiles: any;
+  mounts: any;
+  writtenFiles: any;
 
   
   customColumn = 'name';
@@ -82,21 +82,28 @@ export class DarshanResultViewerComponent implements OnInit {
       this.darshans = darshans.map((darshan) =>{
         return {id: darshan.id, meta: JSON.parse(darshan.meta), summary: JSON.parse(darshan.summary), mounts: JSON.parse(darshan.mounts), writtenFiles: JSON.parse(darshan.writtenFiles)}
       })
-      console.log(this.darshans)
+      //console.log(this.darshans)
     })
   }
 
+
+  
+  /**
+   * Initialize all Charts and Information Displays
+   * 
+   */
   getSummary(){
-    console.log("selected: ",this.selectedSummary)
-    this.initTestMount()
-    this.initTestFiles()
+    //console.log("selected: ",this.selectedSummary)
+    this.initMounts()
     this.initHistChart()
     this.initIoopsCharts()
+    this.initWrittenFiles()
   }
 
   isObj(val): boolean { return typeof val === 'object'; }
 
 
+//HistChartOptions and Data
 initHistChart(){
   const op = this.transformToData(this.selectedSummary.summary.agg_iohist.POSIX)
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
@@ -296,7 +303,7 @@ transformToData(sum_posix){
   
 transformSimplesToData(ioops){
   let obj = {posixio: [], mpiio_indep: [], mpiio_coll: [], stdio:[]}
-  console.log(ioops);
+  //console.log(ioops);
   for (let key in ioops) {
     if (key == "POSIX_simple"){
       this.pushops(obj, 'posixio', ioops, key);
@@ -324,27 +331,33 @@ pushops(obj, ops, ioops, key){
   obj[ops].push(ioops[key].Write)
 }
 
-initTestMount(){
+
+//add Mount Data
+initMounts(){
   let mountdata = {}
   this.selectedSummary.mounts.forEach(mount => {
     mountdata[mount[0]] = mount[1]
     
   });
-  this.testMounts = mountdata
+  this.mounts = mountdata
 }
 
-initTestFiles(){
-  this.testFiles = this.selectedSummary.writtenFiles
+//add Wirtten Files data
+initWrittenFiles(){
+  this.writtenFiles = this.selectedSummary.writtenFiles
   let filedata = {}
   let count = 0
-  this.selectedSummary.writtenFiles.forEach(function(key,value){
+
+  for(var i in this.writtenFiles){
+    let value  = this.writtenFiles[i]
     if (value == "<STDIN>" || value == "<STDOUT>" || value == "<STDERR>"){
     }else{
           filedata[count] = value
           count++
     }
+  }
 
-  })
-  this.testFiles = filedata
+  this.writtenFiles = filedata
+  
 }
 }

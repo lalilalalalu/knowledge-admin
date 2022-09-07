@@ -31,7 +31,7 @@
 
             <nb-card size="tiny">
               <nb-card-body>
-            <div  *ngFor="let mounts of this.testMounts | keyvalue" >
+            <div  *ngFor="let mounts of this.mounts | keyvalue" >
               <div  class="col-md-12" *ngIf= "!isObj(mounts.value)">
                 <label class="label"> {{mounts.key}}:  </label>{{mounts.value}}
               </div>
@@ -47,7 +47,7 @@
 
             <nb-card size="tiny">
               <nb-card-body>
-                <div *ngFor="let file of this.testFiles | keyvalue" >
+                <div *ngFor="let file of this.writtenFiles | keyvalue" >
                   <div class="col-md-12" *ngIf= "!isObj(file.value)">
                 {{file.value}}
                   </div>

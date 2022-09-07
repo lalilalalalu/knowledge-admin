@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {WebServiceService, Performance, Result} from '../../webservice.service';
-import { NbThemeService, NbWindowService, NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder} from '@nebular/theme';
+import {WebServiceService, Result} from '../../webservice.service';
+import { NbThemeService, NbWindowService, NbSortDirection, NbTreeGridDataSource, NbTreeGridDataSourceBuilder} from '@nebular/theme';
 
-/*
-import {WebServiceService, Performance} from '../../webservice.service';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
-import { Result} from '../../webservice.service';
 
-*/
 
 interface TreeNode<T> {
     data: T;
@@ -72,11 +67,11 @@ export class BenchCompComponent implements OnInit {
     readyIO500: any = false;
     readyIOR: any = false;
 
-    //
+    //scatter chart variables
     options_scatter: any={}
 
   
-  constructor(private theme: NbThemeService, public ws: WebServiceService, private windowService: NbWindowService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<Result>) {
+  constructor(private theme: NbThemeService, public ws: WebServiceService, private dataSourceBuilder: NbTreeGridDataSourceBuilder<Result>) {
   }
 
   ngOnInit(): void {
@@ -238,7 +233,7 @@ export class BenchCompComponent implements OnInit {
         return ob;
   }
 
-
+//define Indicator for scatter chart (used but useless(?) because IO500 can already be used as indicator)
   boxIndicator(rkey){
     let indicator = [];
     let names = []
