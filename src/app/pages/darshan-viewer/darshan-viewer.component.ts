@@ -106,6 +106,7 @@ export class DarshanResultViewerComponent implements OnInit {
 //HistChartOptions and Data
 initHistChart(){
   const op = this.transformToData(this.selectedSummary.summary.agg_iohist.POSIX)
+  console.log(op)
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       const colors: any = config.variables;
@@ -339,7 +340,7 @@ initMounts(){
     mountdata[mount[0]] = mount[1]
     
   });
-  this.mounts = mountdata
+  this.testMounts = mountdata
 }
 
 //add Wirtten Files data
@@ -347,17 +348,14 @@ initWrittenFiles(){
   this.writtenFiles = this.selectedSummary.writtenFiles
   let filedata = {}
   let count = 0
-
-  for(var i in this.writtenFiles){
-    let value  = this.writtenFiles[i]
-    if (value == "<STDIN>" || value == "<STDOUT>" || value == "<STDERR>"){
+  Object.keys(this.selectedSummary.writtenFiles).forEach((key)=>{
+    if (this.selectedSummary.writtenFiles[key] == "<STDIN>" || this.selectedSummary.writtenFiles[key]  == "<STDOUT>" || this.selectedSummary.writtenFiles[key]  == "<STDERR>"){
     }else{
-          filedata[count] = value
-          count++
-    }
-  }
+      filedata[count] = this.selectedSummary.writtenFiles[key]
+      count++
+}
+  })
 
   this.writtenFiles = filedata
-  
 }
 }
